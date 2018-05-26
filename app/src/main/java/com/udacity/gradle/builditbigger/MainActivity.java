@@ -1,23 +1,48 @@
 package com.udacity.gradle.builditbigger;
 
+import android.app.Activity;
+import android.arch.lifecycle.MutableLiveData;
+import android.arch.lifecycle.Observer;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ProgressBar;
 
-import com.example.android.javajokeproviderlib.Joke;
 import com.example.android.jokepresenterandroidlib.JokePresenterActivity;
 
 
 public class MainActivity extends AppCompatActivity {
 
+    public static MutableLiveData<String> mJoke;
+    private Context mContext;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        progressBar = findViewById(R.id.progressBar);
+        mContext = this;
+        final Activity activity = this;
+        mJoke = new MutableLiveData<String>();
+        mJoke.observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(@Nullable String s) {
+                String message = mJoke.getValue();
+                progressBar.setVisibility(View.INVISIBLE);
+                Intent intent = new Intent(activity, JokePresenterActivity.class);
+                intent.putExtra(JokePresenterActivity.KEY_JOKE, message);
+                startActivity(intent);
+            }
+        });
+
     }
 
 
@@ -46,13 +71,16 @@ public class MainActivity extends AppCompatActivity {
     public void tellJoke(View view) {
 
 //        Toast.makeText(this, "MAIN: "+joke.getJoke(), Toast.LENGTH_SHORT).show();
+        Context context = getApplicationContext();
 
-        Joke joke = new Joke();
-        String message = joke.getJoke() + " passed through MainActivity";
-
-        Intent intent = new Intent(this, JokePresenterActivity.class);
-        intent.putExtra(JokePresenterActivity.KEY_JOKE, message);
-        startActivity(intent);
+        progressBar.setVisibility(View.VISIBLE);
+        new EndpointsAsyncTask().execute(new Pair<Context, String>(this, "Dummy"));
+//        Joke joke = new Joke();
+//        String message = joke.getJoke() + " passed through MainActivity";
+//
+//        Intent intent = new Intent(this, JokePresenterActivity.class);
+//        intent.putExtra(JokePresenterActivity.KEY_JOKE, message);
+//        startActivity(intent);
     }
 
 
