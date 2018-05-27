@@ -36,17 +36,29 @@ android {
         free {
             applicationId 'com.udacity.gradle.builditbigger.free'
             dimension "tier"
+            versionCode 1
+            versionName = "1.0"
+//            buildConfigField("String", "FLAVOR", "FREE")
+            dependencies {
+                implementation 'com.google.android.gms:play-services-ads:15.0.1'
+            }
         }
         paid {
             applicationId 'com.udacity.gradle.builditbigger.paid'
             dimension "tier"
+            versionCode 1
+            versionName = "1.0"
+//            buildConfigField("String", "FLAVOR", "PAID")
         }
     }
-
 }
+
+
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'com.android.support.constraint:constraint-layout:1.1.0'
+    implementation 'com.android.support:design:27.1.1'
     endpointsServer project(path: ':backend', configuration: 'endpoints')
     implementation 'com.android.support:appcompat-v7:27.1.1'
     implementation 'com.android.support:customtabs:27.1.1'
@@ -54,7 +66,7 @@ dependencies {
     implementation 'com.android.support:support-v4:27.1.1'
     implementation 'com.android.support:multidex:1.0.3'
     implementation 'com.android.support:support-compat:27.1.1'
-    implementation 'com.google.android.gms:play-services-ads:15.0.1'
+
     implementation 'com.google.api-client:google-api-client:1.23.0'
     implementation 'com.google.http-client:google-http-client-android:1.23.0'
     implementation 'com.google.code.findbugs:jsr305:3.0.1'
@@ -66,4 +78,3 @@ dependencies {
     //    implementation project(':backend')
     //    implementation 'com.google.appengine:appengine-api-1.0-sdk:1.9.56'
 }
-
