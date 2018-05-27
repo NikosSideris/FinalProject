@@ -38,7 +38,6 @@ android {
             dimension "tier"
             versionCode 1
             versionName = "1.0"
-//            buildConfigField("String", "FLAVOR", "FREE")
             dependencies {
                 implementation 'com.google.android.gms:play-services-ads:15.0.1'
             }
@@ -48,12 +47,9 @@ android {
             dimension "tier"
             versionCode 1
             versionName = "1.0"
-//            buildConfigField("String", "FLAVOR", "PAID")
         }
     }
 }
-
-
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
@@ -75,6 +71,5 @@ dependencies {
     })
     testImplementation 'junit:junit:4.12'
     implementation project(':jokepresenterandroidlib')
-    //    implementation project(':backend')
-    //    implementation 'com.google.appengine:appengine-api-1.0-sdk:1.9.56'
+
 }

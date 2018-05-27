@@ -79,7 +79,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void tellJoke(View view) {
 
-//        Toast.makeText(this, "MAIN: "+joke.getJoke(), Toast.LENGTH_SHORT).show();
         Context context = getApplicationContext();
         if (BuildConfig.FLAVOR == "free") {
             mInterstitialAd.loadAd(new AdRequest.Builder().build());

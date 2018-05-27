@@ -14,6 +14,8 @@ import java.io.IOException;
 
 /**
  * Created by Nikos on 05/26/18.
+ *
+ * CAUTION: REPLACE 192.168.1.199:8080 WITH THE SERVER'S IP (ie. from ipConfig)
  */
 public class EndpointsAsyncTask extends AsyncTask<Pair<Context, String>, Void, String> {
     private static MyApi myApiService = null;
@@ -33,7 +35,6 @@ public class EndpointsAsyncTask extends AsyncTask<Pair<Context, String>, Void, S
                             abstractGoogleClientRequest.setDisableGZipContent(true);
                         }
                     });
-            // end options for devappserver
 
             myApiService = builder.build();
         }
