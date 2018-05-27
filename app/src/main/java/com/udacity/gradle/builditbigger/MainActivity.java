@@ -15,6 +15,10 @@ import android.view.View;
 import android.widget.ProgressBar;
 
 import com.example.android.jokepresenterandroidlib.JokePresenterActivity;
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.ads.MobileAds;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -22,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     public static MutableLiveData<String> mJoke;
     private Context mContext;
     private ProgressBar progressBar;
+    private InterstitialAd mInterstitialAd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +47,10 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        MobileAds.initialize(this, "ca-app-pub-3940256099942544~3347511713");
+
+        mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
 
     }
 
@@ -72,16 +81,48 @@ public class MainActivity extends AppCompatActivity {
 
 //        Toast.makeText(this, "MAIN: "+joke.getJoke(), Toast.LENGTH_SHORT).show();
         Context context = getApplicationContext();
+        if (BuildConfig.FLAVOR == "free") {
+            mInterstitialAd.loadAd(new AdRequest.Builder().build());
+            mInterstitialAd.setAdListener(new AdListener() {
+                @Override
+                public void onAdLoaded() {
+                    // Code to be executed when an ad finishes loading.
+                    mInterstitialAd.show();
+                }
 
-        progressBar.setVisibility(View.VISIBLE);
-        new EndpointsAsyncTask().execute(new Pair<Context, String>(this, "Dummy"));
-//        Joke joke = new Joke();
-//        String message = joke.getJoke() + " passed through MainActivity";
-//
-//        Intent intent = new Intent(this, JokePresenterActivity.class);
-//        intent.putExtra(JokePresenterActivity.KEY_JOKE, message);
-//        startActivity(intent);
+                @Override
+                public void onAdFailedToLoad(int errorCode) {
+                    // Code to be executed when an ad request fails.
+                    runAsync();
+                }
+
+                @Override
+                public void onAdOpened() {
+                    // Code to be executed when the ad is displayed.
+                }
+
+                @Override
+                public void onAdLeftApplication() {
+                    // Code to be executed when the user has left the app.
+
+                }
+
+                @Override
+                public void onAdClosed() {
+                    // Code to be executed when the interstitial ad is closed.
+                    runAsync();
+                }
+            });
+
+        } else {
+            runAsync();
+        }
+
     }
 
+    private void runAsync() {
+        progressBar.setVisibility(View.VISIBLE);
+        new EndpointsAsyncTask().execute(new Pair<Context, String>(this, "Dummy"));
+    }
 
 }
