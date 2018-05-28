@@ -48,12 +48,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        if (BuildConfig.FLAVOR.equals("free")) {
             MobileAds.initialize(this, "ca-app-pub-3940256099942544~3347511713");
 
             mInterstitialAd = new InterstitialAd(this);
             mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
-        }
+
     }
 
 
@@ -82,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
     public void tellJoke(View view) {
 
         Context context = getApplicationContext();
-        if (BuildConfig.FLAVOR.equals("free")) {
+
             mInterstitialAd.loadAd(new AdRequest.Builder().build());
             mInterstitialAd.setAdListener(new AdListener() {
                 @Override
@@ -115,9 +114,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
 
-        } else {
-            runAsync();
-        }
 
     }
 
