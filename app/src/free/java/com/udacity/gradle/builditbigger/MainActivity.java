@@ -76,7 +76,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void tellJoke(View view) {
 
-//        Context context = getApplicationContext();
 
             mInterstitialAd.loadAd(new AdRequest.Builder().build());
             mInterstitialAd.setAdListener(new AdListener() {
