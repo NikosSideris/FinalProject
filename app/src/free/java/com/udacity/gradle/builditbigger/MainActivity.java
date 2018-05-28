@@ -48,10 +48,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-            MobileAds.initialize(this, "ca-app-pub-3940256099942544~3347511713");
+        MobileAds.initialize(this, Constants.MOBILE_AD);
 
             mInterstitialAd = new InterstitialAd(this);
-            mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
+        mInterstitialAd.setAdUnitId(Constants.MOBILE_ID);
 
     }
 
@@ -65,12 +65,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
@@ -80,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void tellJoke(View view) {
 
-        Context context = getApplicationContext();
+//        Context context = getApplicationContext();
 
             mInterstitialAd.loadAd(new AdRequest.Builder().build());
             mInterstitialAd.setAdListener(new AdListener() {
